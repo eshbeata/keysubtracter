@@ -81,7 +81,7 @@ int main(int argc, char **argv)  {
 	mpz_init_set_ui(TWO,2);
 	mpz_init(target_publickey.x);
 	mpz_init_set_ui(target_publickey.y,0);
-	while ((c = getopt(argc, argv, "hvxRbk:n:o:p:r:f:l:")) != -1) {
+	while ((c = getopt(argc, argv, "hvxRb:k:n:o:p:r:f:l:")) != -1) {
 		switch(c) {
 			case 'x':
 				FLAG_HIDECOMMENT = 1;
