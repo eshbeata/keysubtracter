@@ -176,15 +176,24 @@ int main(int argc, char **argv)  {
 						}
 						else	{
 							gmp_fprintf(OUTPUT,"%s # - %Zd\n",str_publickey,base_key);
+							if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
+                                gmp_fprintf(OUTPUT,"%s # - %Zd\n",str_publickey,sum_key);
+                                exit(0);
+                            }
 						}
 						
 						Point_Addition(&negated_publickey,&target_publickey,&dst_publickey);
 						generate_strpublickey(&dst_publickey,FLAG_LOOK == 0,str_publickey);
 						if(FLAG_HIDECOMMENT)	{
 							fprintf(OUTPUT,"%s\n",str_publickey);
+							
 						}
 						else	{
 							gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,base_key);
+							if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
+                                gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,sum_key);
+                                exit(0);
+                            }
 						}
 					break;
 					case 1: //rmd160
@@ -232,6 +241,10 @@ int main(int argc, char **argv)  {
 					}
 					else	{
 						fprintf(OUTPUT,"%s # target\n",str_publickey);
+						if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
+                                gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,sum_key);
+                                exit(0);
+                            }
 					}
 				break;
 				case 1: //rmd160
