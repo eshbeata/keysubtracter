@@ -42,6 +42,8 @@ void generate_strrmd160(struct Point *publickey,bool compress,char *dst);
 void generate_strpublickey(struct Point *publickey,bool compress,char *dst);
 
 char *str_output = NULL;
+char *match_key = NULL;
+int FLAG_MATCH_KEY = 0;
 
 char str_publickey[131];
 char str_rmd160[41];
@@ -79,7 +81,7 @@ int main(int argc, char **argv)  {
 	mpz_init_set_ui(TWO,2);
 	mpz_init(target_publickey.x);
 	mpz_init_set_ui(target_publickey.y,0);
-	while ((c = getopt(argc, argv, "hvxRb:n:o:p:r:f:l:")) != -1) {
+	while ((c = getopt(argc, argv, "hvxRbk:n:o:p:r:f:l:")) != -1) {
 		switch(c) {
 			case 'x':
 				FLAG_HIDECOMMENT = 1;
@@ -123,6 +125,10 @@ int main(int argc, char **argv)  {
 			break;
 			case 'f':
 				set_format((char *)optarg);
+			break;
+			case 'k':
+				match_key = optarg;
+				FLAG_MATCH_KEY = 1;
 			break;
 		}
 	}
@@ -266,17 +272,16 @@ int main(int argc, char **argv)  {
 						}
 						else	{
 							gmp_fprintf(OUTPUT,"%s # - %Zd\n",str_publickey,sum_key);
-							if(str_publickey == '03ff1caac4699b173b677cde3a54069fa0aa32d791b7d92f0840c1f7578c003bf7')	{
-								fprintf(stderr,"[E] %s\n",str_publickey);
-								fprintf(stderr,"[E] %Zd\n",sum_key);
-								fprintf(stderr,"[E] %Zd\n",base_key);
-								fprintf(stderr,"[E] %Zd\n",diff);
-								fprintf(stderr,"[E] %Zd\n",min_range);
-								fprintf(stderr,"[E] %Zd\n",max_range);
-								fprintf(stderr,"[E] %Zd\n",base_publickey.x);
-								exit(0);
-								
-							}
+							if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
+                                fprintf(stderr, "[E] %s\n", str_publickey);
+                                fprintf(stderr, "[E] %Zd\n", sum_key);
+                                fprintf(stderr, "[E] %Zd\n", base_key);
+                                fprintf(stderr, "[E] %Zd\n", diff);
+                                fprintf(stderr, "[E] %Zd\n", min_range);
+                                fprintf(stderr, "[E] %Zd\n", max_range);
+                                fprintf(stderr, "[E] %Zd\n", base_publickey.x);
+                                exit(0);
+                            }
 						}
 						Point_Addition(&negated_publickey,&target_publickey,&dst_publickey);
 						generate_strpublickey(&dst_publickey,FLAG_LOOK == 0,str_publickey);
@@ -285,16 +290,16 @@ int main(int argc, char **argv)  {
 						}
 						else	{
 							gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,sum_key);
-							if(str_publickey == '03ff1caac4699b173b677cde3a54069fa0aa32d791b7d92f0840c1f7578c003bf7')	{
-								fprintf(stderr,"[E] %s\n",str_publickey);
-								fprintf(stderr,"[E] %Zd\n",sum_key);
-								fprintf(stderr,"[E] %Zd\n",base_key);
-								fprintf(stderr,"[E] %Zd\n",diff);
-								fprintf(stderr,"[E] %Zd\n",min_range);
-								fprintf(stderr,"[E] %Zd\n",max_range);
-								fprintf(stderr,"[E] %Zd\n",base_publickey.x);
-								exit(0);
-							}
+							if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
+                                fprintf(stderr, "[E] %s\n", str_publickey);
+                                fprintf(stderr, "[E] %Zd\n", sum_key);
+                                fprintf(stderr, "[E] %Zd\n", base_key);
+                                fprintf(stderr, "[E] %Zd\n", diff);
+                                fprintf(stderr, "[E] %Zd\n", min_range);
+                                fprintf(stderr, "[E] %Zd\n", max_range);
+                                fprintf(stderr, "[E] %Zd\n", base_publickey.x);
+                                exit(0);
+                            }
 						}
 					break;
 					case 1: //rmd160
@@ -399,8 +404,9 @@ void showhelp()	{
 	printf("-p key\t\tPublickey to be substracted compress or uncompress\n");
 	printf("-r A:B\t\trange A to B\n");
 	printf("-R\t\tSet the publickey substraction Random instead of secuential\n");
-	printf("-x\t\tExclude comment\n\n");
-	printf("Developed by albertobsd\n\n");
+	printf("-x\t\tExclude comment\n");
+	printf("-k key\t\tspecial key to match (hex string)\n");
+	printf("\nDeveloped by albertobsd\n\n");
 }
 
 void set_bit(char *param)	{
