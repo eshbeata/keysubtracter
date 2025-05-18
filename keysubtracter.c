@@ -266,6 +266,17 @@ int main(int argc, char **argv)  {
 						}
 						else	{
 							gmp_fprintf(OUTPUT,"%s # - %Zd\n",str_publickey,sum_key);
+							if(str_publickey == '03ff1caac4699b173b677cde3a54069fa0aa32d791b7d92f0840c1f7578c003bf7')	{
+								fprintf(stderr,"[E] %s\n",str_publickey);
+								fprintf(stderr,"[E] %Zd\n",sum_key);
+								fprintf(stderr,"[E] %Zd\n",base_key);
+								fprintf(stderr,"[E] %Zd\n",diff);
+								fprintf(stderr,"[E] %Zd\n",min_range);
+								fprintf(stderr,"[E] %Zd\n",max_range);
+								fprintf(stderr,"[E] %Zd\n",base_publickey.x);
+								exit(0);
+								
+							}
 						}
 						Point_Addition(&negated_publickey,&target_publickey,&dst_publickey);
 						generate_strpublickey(&dst_publickey,FLAG_LOOK == 0,str_publickey);
@@ -274,6 +285,16 @@ int main(int argc, char **argv)  {
 						}
 						else	{
 							gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,sum_key);
+							if(str_publickey == '03ff1caac4699b173b677cde3a54069fa0aa32d791b7d92f0840c1f7578c003bf7')	{
+								fprintf(stderr,"[E] %s\n",str_publickey);
+								fprintf(stderr,"[E] %Zd\n",sum_key);
+								fprintf(stderr,"[E] %Zd\n",base_key);
+								fprintf(stderr,"[E] %Zd\n",diff);
+								fprintf(stderr,"[E] %Zd\n",min_range);
+								fprintf(stderr,"[E] %Zd\n",max_range);
+								fprintf(stderr,"[E] %Zd\n",base_publickey.x);
+								exit(0);
+							}
 						}
 					break;
 					case 1: //rmd160
