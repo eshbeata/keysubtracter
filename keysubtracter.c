@@ -273,13 +273,7 @@ int main(int argc, char **argv)  {
 						else	{
 							gmp_fprintf(OUTPUT,"%s # - %Zd\n",str_publickey,sum_key);
 							if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
-                                fprintf(stderr, "[E] %s\n", str_publickey);
-                                fprintf(stderr, "[E] %Zd\n", sum_key);
-                                fprintf(stderr, "[E] %Zd\n", base_key);
-                                fprintf(stderr, "[E] %Zd\n", diff);
-                                fprintf(stderr, "[E] %Zd\n", min_range);
-                                fprintf(stderr, "[E] %Zd\n", max_range);
-                                fprintf(stderr, "[E] %Zd\n", base_publickey.x);
+                                gmp_fprintf(OUTPUT,"%s # - %Zd\n",str_publickey,sum_key);
                                 exit(0);
                             }
 						}
@@ -291,13 +285,7 @@ int main(int argc, char **argv)  {
 						else	{
 							gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,sum_key);
 							if (FLAG_MATCH_KEY && strcmp(str_publickey, match_key) == 0) {
-                                fprintf(stderr, "[E] %s\n", str_publickey);
-                                fprintf(stderr, "[E] %Zd\n", sum_key);
-                                fprintf(stderr, "[E] %Zd\n", base_key);
-                                fprintf(stderr, "[E] %Zd\n", diff);
-                                fprintf(stderr, "[E] %Zd\n", min_range);
-                                fprintf(stderr, "[E] %Zd\n", max_range);
-                                fprintf(stderr, "[E] %Zd\n", base_publickey.x);
+                                gmp_fprintf(OUTPUT,"%s # + %Zd\n",str_publickey,sum_key);
                                 exit(0);
                             }
 						}
